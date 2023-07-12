@@ -16,10 +16,12 @@
 <div class="mb-3">
 <form:label path="name" for="name" class="form-label">Expense Name</form:label>
 <form:input  type="text" path="name" class="form-control" id="name" name="name" placeholder="Enter expense name"/>
+<form:errors style="color: red;" path="name"/>
 </div>
 <div class="mb-3">
 <form:label path="vendor" for="vendor"  class="form-label">Vendor</form:label>
 <form:input  path="vendor" type="text" class="form-control" id="vendor" name="vendor" placeholder="Enter vendor name"/>
+<form:errors style="color: red;" path="vendor"/>
 </div>
 <div class="mb-3">
 <form:label  path="amount" for="amount" class="form-label">Amount</form:label>
@@ -28,6 +30,7 @@
 <div class="mb-3">
 <form:label  path="description" for="description" class="form-label">Description</form:label>
 <form:textarea path="description" class="form-control" id="description" name="description" rows="3"></form:textarea>
+<form:errors style="color: red;" path="description"/>
 </div>
 <button type="submit" class="btn btn-primary" value="submit" >Submit</button>
 </form:form>

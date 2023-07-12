@@ -11,7 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -22,24 +22,26 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name="expenses")
 public class Expense {
+	// Private attributes
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	
 	@NotNull
+	@Size(min = 3, message="Name must be atleast 3 characters!")
 	private String name;
 	
 	@NotNull
-	@Size(min = 3, message="Name must be atleast 3 characters!")
+	@Size(min = 3, message="Vendor must be atleast 3 characters!")
 	private String vendor;
 	
 	@NotNull
-	@Min(value = 3)
+	(message="Amount cannot be blank!")
 	private Integer amount;
 	
-	@NotNull
-	@Size(min = 1, max = 300)
+	@NotBlank
+	@Size(min = 5, message="Description must be atleast 5 characters long!")
 	private String description;
 	
 	// This will not allow the createdAt column to be updated after creation

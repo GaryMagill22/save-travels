@@ -25,7 +25,7 @@ public class MainController {
 	}
 	
 	
-	
+	// Dashboard - findAll
 	@GetMapping("/expenses")
 	public String displayAllExpenses(Model model) {
 		
@@ -35,20 +35,33 @@ public class MainController {
 	}
 	
 	
-	// Create Expense
+	//  Create Expense
 	@PostMapping("/expenses")
 	public String addExpense(@Valid @ModelAttribute("expense") Expense newExpense,
-			BindingResult result
-			) {
-		/* Behind the scene:
-		 * 1. Created an empty Expense
-		 * 2. update the expense using setters
-		 */
+			BindingResult result) {
+		if(result.hasErrors()) {
+			return "form.jsp";
+		}
 		 expenseService.createExpense(newExpense);
 		 return "redirect:/expenses";
 	}
 	
-	// Create Expense
+	
+	// Process Edit Expense
+	@PutMapping("/expenses/edit/{id}")
+	public String processEdit(@Valid @ModelAttribute("expense") Expense Expense,
+			BindingResult result) {
+		if(result.hasErrors()) {
+			return "edit.jsp";
+		} else {
+			expenseService.updateExpense(Expense);
+			return "redirect:/expenses";
+			
+		}
+	}
+	
+	
+	// Render Create Expense Form
 	@GetMapping("/create")
 	public String createExpense(@ModelAttribute("expense") Expense newExpense) {
 		return "form.jsp";
@@ -62,6 +75,8 @@ public class MainController {
 		return "edit.jsp";
 	}
 	
+	
+	// Render the Details Page
 	@GetMapping("/expenses/{id}")
 	public String renderDetails(@PathVariable("id") Long id, Model model) {
 		Expense expense = expenseService.oneExpense(id);
@@ -69,17 +84,7 @@ public class MainController {
 		return "details.jsp";
 	}
 	
-	@PutMapping("/expenses/edit/{id}")
-	public String processEdit(@Valid @ModelAttribute("expense") Expense Expense,
-			BindingResult result) {
-		if(result.hasErrors()) {
-			return "edit.jsp";
-		} else {
-			expenseService.updateExpense(Expense);
-			return "redirect:/expenses";
-			
-		}
-	}
+
 	
 	@DeleteMapping("/expenses/{id}")
 	public String processDelete(@PathVariable("id") Long id) {
